@@ -12,6 +12,8 @@ const FacebookStrategy = require("passport-facebook").Strategy;
 
 const app = express();
 
+const port = process.env.PORT || 5000
+
 mongoose.set('strictQuery', true);
 app.use(express.static("public"));
 app.set("view engine", "ejs");
@@ -21,7 +23,7 @@ app.use(express.urlencoded({
 
 
 app.use(session({
-    secret: "My Little Secret.",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false
 }));
@@ -30,7 +32,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-mongoose.connect("mongodb://localhost:27017/userDB", {
+mongoose.connect(process.env.MONGODB, {
     useNewUrlParser: true
 })
 
@@ -62,7 +64,7 @@ passport.deserializeUser(function (id, done) {
 passport.use(new GoogleStrategy({
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
-        callbackURL: "http://localhost:3000/auth/google/secrets",
+        callbackURL: "https://secrets-4hck.onrender.com/auth/google/secrets",
         userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
     },
     function (accessToken, refreshToken, profile, cb) {
@@ -78,7 +80,7 @@ passport.use(new GoogleStrategy({
 passport.use(new FacebookStrategy({
         clientID: process.env.CLIENT_ID_FB,
         clientSecret: process.env.FB_SECRET,
-        callbackURL: "http://localhost:3000/auth/facebook/secrets"
+        callbackURL: "https://secrets-4hck.onrender.com/auth/facebook/secrets"
     },
     function (accessToken, refreshToken, profile, cb) {
         User.findOrCreate({
@@ -127,12 +129,18 @@ app.get("/login", function (req, res) {
 })
 
 app.get("/secrets", function (req, res) {
-    User.find({"secret" : {$ne:null}} , function(err , foundUser){
-        if(err){
+    User.find({
+        "secret": {
+            $ne: null
+        }
+    }, function (err, foundUser) {
+        if (err) {
             console.log(err);
-        }else{
-            if(foundUser){
-                res.render("secrets" , {usersWithSecrets: foundUser})
+        } else {
+            if (foundUser) {
+                res.render("secrets", {
+                    usersWithSecrets: foundUser
+                })
             }
         }
     })
@@ -193,15 +201,15 @@ app.post("/login", function (req, res) {
     })
 })
 
-app.post("/submit" , function(req , res){
+app.post("/submit", function (req, res) {
     const submittedSecret = req.body.secret;
 
-    User.findById(req.user.id , function(err ,foundUser){
-        if(err){
+    User.findById(req.user.id, function (err, foundUser) {
+        if (err) {
             console.log(err)
-        }else{
+        } else {
             foundUser.secret = submittedSecret;
-            foundUser.save(function(){
+            foundUser.save(function () {
                 res.redirect("/secrets")
             })
         }
@@ -209,6 +217,6 @@ app.post("/submit" , function(req , res){
 })
 
 
-app.listen(3000, function () {
+app.listen(port, function () {
     console.log("Server started at port 3000")
 })
