@@ -1,9 +1,8 @@
-//jshint esversion:6
 require('dotenv').config();
 const express = require("express");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
-const session = require("express-session")
+const session = require("cookie-session")
 const passport = require("passport")
 const passportLocalMongoose = require("passport-local-mongoose");
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
@@ -64,7 +63,7 @@ passport.deserializeUser(function (id, done) {
 passport.use(new GoogleStrategy({
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
-        callbackURL: "https://secrets-4hck.onrender.com/auth/google/secrets",
+        callbackURL: "https://secrets2.onrender.com/auth/google/secrets",
         userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
     },
     function (accessToken, refreshToken, profile, cb) {
@@ -80,7 +79,7 @@ passport.use(new GoogleStrategy({
 passport.use(new FacebookStrategy({
         clientID: process.env.CLIENT_ID_FB,
         clientSecret: process.env.FB_SECRET,
-        callbackURL: "https://secrets-4hck.onrender.com/auth/facebook/secrets"
+        callbackURL: "https://secrets2.onrender.com/auth/facebook/secrets"
     },
     function (accessToken, refreshToken, profile, cb) {
         User.findOrCreate({
