@@ -1,4 +1,8 @@
 <%- include('partials/header') %>
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous"
+  src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v15.0&appId=856424068785539&autoLogAppEvents=1"
+  nonce="oJmxfGRH"></script>
 <div class="container mt-5">
   <h1>Register</h1>
 
@@ -24,18 +28,21 @@
       </div>
     </div>
 
-    <!-- <div class="col-sm-4">
+    <div class="col-sm-4">
       <div class="card social-block">
         <div class="card-body">
-          <a class="btn btn-block" href="/auth/google" role="button">
-            <i class="fab fa-google"></i>
-            Sign Up with Google
+          <a class="btn btn-outline-dark btn-lg" href="/auth/google" role="button" style="text-transform:none">
+            <img width="20px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+            Register with Google
+          </a>
+          <a href="/auth/facebook">
+            <div class="fb-login-button" data-width="" data-size="large" data-button-type="continue_with" data-layout="default"
+            data-auto-logout-link="false" data-use-continue-as="false"></div>
           </a>
         </div>
       </div>
-    </div> -->
-
+    </div>
   </div>
 </div>
-
 <%- include('partials/header') %>

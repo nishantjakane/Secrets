@@ -14,3 +14,7 @@ body {
   color: #fff;
   background-color: #000;
 }
+
+.fb-login-button{
+  margin-top: 20px;
+}
