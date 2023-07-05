@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config()
 const express = require("express");
 const ejs = require("ejs");
 const mongoose = require("mongoose");
@@ -61,11 +61,13 @@ passport.deserializeUser(function (id, done) {
     })
 });
 
+console.log(process.env.CLIENT_ID)
+
 
 passport.use(new GoogleStrategy({
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
-        callbackURL: "http://https://secrets-4hck.onrender.com/auth/google/secrets",
+        callbackURL: "https://secrets1.onrender.com/auth/google/secrets",
         userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
     },
     function (accessToken, refreshToken, profile, cb) {
