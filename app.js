@@ -61,7 +61,6 @@ passport.deserializeUser(function (id, done) {
     })
 });
 
-console.log(process.env.CLIENT_ID)
 
 
 passport.use(new GoogleStrategy({
@@ -71,7 +70,6 @@ passport.use(new GoogleStrategy({
         userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
     },
     function (accessToken, refreshToken, profile, cb) {
-        console.log(profile)
         User.findOrCreate({
             googleId: profile.id
         }, function (err, user) {
