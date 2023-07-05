@@ -25,7 +25,7 @@ app.use(session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: false,
-    keys: process.env.SECRET
+    keys: [process.env.keys , process.env.SECRET]
 
 }));
 
