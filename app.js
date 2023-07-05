@@ -24,7 +24,9 @@ app.use(express.urlencoded({
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    keys: process.env.SECRET
+
 }));
 
 app.use(passport.initialize());
