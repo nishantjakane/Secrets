@@ -76,20 +76,6 @@ passport.use(new GoogleStrategy({
     }
 ));
 
-passport.use(new FacebookStrategy({
-        clientID: process.env.CLIENT_ID_FB,
-        clientSecret: process.env.FB_SECRET,
-        callbackURL: "https://secrets2.onrender.com/auth/facebook/secrets"
-    },
-    function (accessToken, refreshToken, profile, cb) {
-        User.findOrCreate({
-            facebookId: profile.id
-        }, function (err, user) {
-            return cb(err, user);
-        });
-    }
-));
-
 // ========= GET
 
 
