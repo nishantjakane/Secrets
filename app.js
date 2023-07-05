@@ -63,7 +63,7 @@ passport.deserializeUser(function (id, done) {
 passport.use(new GoogleStrategy({
         clientID: process.env.CLIENT_ID,
         clientSecret: process.env.CLIENT_SECRET,
-        callbackURL: "https://secrets2.onrender.com/auth/google/secrets",
+        callbackURL: "http://https://secrets-4hck.onrender.com/auth/google/secrets",
         userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo'
     },
     function (accessToken, refreshToken, profile, cb) {
@@ -189,7 +189,7 @@ app.post("/login", function (req, res) {
         password: req.body.password
     });
 
-    req.login(user, function (err) {
+    req.logIn(user, function (err) {
         if (err) {
             console.log(err);
         } else {
@@ -207,11 +207,13 @@ app.post("/submit", function (req, res) {
         if (err) {
             console.log(err)
         } else {
-            foundUser.secret = submittedSecret;
-            foundUser.save(function () {
-                res.redirect("/secrets")
+            if(foundUser){
+                foundUser.secret = submittedSecret;
+                foundUser.save(function () {
+                    res.redirect("/secrets")
             })
         }
+    }
     })
 })
 
